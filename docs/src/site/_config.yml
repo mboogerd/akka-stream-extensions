@@ -1,0 +1,14 @@
+name: United Streams Documentation
+markdown: kramdown
+highlighter: rouge
+# this kramdown config is for local use and I think GitHub's Jekyll ignores it
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+baseurl: /united-streams
+apidocs: /united-streams/api/
+sources: https://github.com/mboogerd/united-streams/blob/master/
+
+collections:
+  tut:
+    output: true
