@@ -9,77 +9,77 @@ import cats.data.Ior
   */
 trait JoinDefinitionHelper{
 
-  /* symmetric instances */
+  /* symmetric instances - although generalizing to OUT has removed the little advantage that was available */
 
-  protected[join] def leftIorRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[Ior[S, T], NotUsed] = ???
-  protected[join] def leftIorRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, Ior[S, T], NotUsed] = ???
-  protected[join] def leftIorRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, Ior[S, T], NotUsed] = leftIorRight(t, s).map(_.swap)
+  protected[join] def leftIorRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, Ior[A, B]) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def leftIorRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, Ior[A, B]) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def leftIorRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, Ior[A, B]) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
-  protected[join] def leftAndRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(S, T), NotUsed] = ???
-  protected[join] def leftAndRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (S, T), NotUsed] = ???
-  protected[join] def leftAndRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (S, T), NotUsed] = leftAndRight(t, s).map(_.swap)
+  protected[join] def leftAndRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, B)) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def leftAndRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def leftAndRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
-  protected[join] def someLeftAndSomeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(NEL[S], NEL[T]), NotUsed] = ???
-  protected[join] def someLeftAndSomeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (NEL[S], NEL[T]), NotUsed] = ???
-  protected[join] def someLeftAndSomeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (NEL[S], NEL[T]), NotUsed] = someLeftAndSomeRight(t, s).map(_.swap)
+  protected[join] def someLeftAndSomeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], NEL[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def someLeftAndSomeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def someLeftAndSomeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
-  protected[join] def someLeftIorSomeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[NEL[S] Ior NEL[T], NotUsed] = ???
-  protected[join] def someLeftIorSomeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, NEL[S] Ior NEL[T], NotUsed] = ???
-  protected[join] def someLeftIorSomeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, NEL[S] Ior NEL[T], NotUsed] = someLeftIorSomeRight(t, s).map(_.swap)
+  protected[join] def someLeftIorSomeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, NEL[A] Ior NEL[B]) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def someLeftIorSomeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, NEL[A] Ior NEL[B]) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def someLeftIorSomeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, NEL[A] Ior NEL[B]) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
 
   /* assymmetric instances */
 
-  protected[join] def maybeLeftAndRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(Option[S], T), NotUsed] = ???
-  protected[join] def maybeLeftAndRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (Option[S], T), NotUsed] = ???
-  protected[join] def maybeLeftAndRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (Option[S], T), NotUsed] = ???
+  protected[join] def maybeLeftAndRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], B)) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def maybeLeftAndRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def maybeLeftAndRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
-  protected[join] def leftAndMaybeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(S, Option[T]), NotUsed] = ???
-  protected[join] def leftAndMaybeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (S, Option[T]), NotUsed] = ???
-  protected[join] def leftAndMaybeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (S, Option[T]), NotUsed] = ???
-
-
-  protected[join] def maybeLeftSomeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(Option[S], NEL[T]), NotUsed] = ???
-  protected[join] def maybeLeftSomeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (Option[S], NEL[T]), NotUsed] = ???
-  protected[join] def maybeLeftSomeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (Option[S], NEL[T]), NotUsed] = ???
-
-  protected[join] def someLeftMaybeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(NEL[S], Option[T]), NotUsed] = ???
-  protected[join] def someLeftMaybeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (NEL[S], Option[T]), NotUsed] = ???
-  protected[join] def someLeftMaybeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (NEL[S], Option[T]), NotUsed] = ???
+  protected[join] def leftAndMaybeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, Option[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def leftAndMaybeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, Option[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def leftAndMaybeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, Option[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
 
-  protected[join] def leftIorSomeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[S Ior NEL[T], NotUsed] = ???
-  protected[join] def leftIorSomeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, S Ior NEL[T], NotUsed] = ???
-  protected[join] def leftIorSomeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, S Ior NEL[T], NotUsed] = ???
+  protected[join] def maybeLeftSomeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], NEL[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def maybeLeftSomeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def maybeLeftSomeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
-  protected[join] def someLeftIorRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[NEL[S] Ior T, NotUsed] = ???
-  protected[join] def someLeftIorRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, NEL[S] Ior T, NotUsed] = ???
-  protected[join] def someLeftIorRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, NEL[S] Ior T, NotUsed] = ???
-
-
-  protected[join] def leftAnyRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(S, List[T]), NotUsed] = ???
-  protected[join] def leftAnyRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (S, List[T]), NotUsed] = ???
-  protected[join] def leftAnyRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (S, List[T]), NotUsed] = ???
-
-  protected[join] def anyLeftAndRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(List[S], T), NotUsed] = ???
-  protected[join] def anyLeftAndRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (List[S], T), NotUsed] = ???
-  protected[join] def anyLeftAndRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (List[S], T), NotUsed] = ???
+  protected[join] def someLeftMaybeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], Option[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def someLeftMaybeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], Option[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def someLeftMaybeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], Option[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
 
-  protected[join] def leftSomeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(S, NEL[T]), NotUsed] = ???
-  protected[join] def leftSomeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (S, NEL[T]), NotUsed] = ???
-  protected[join] def leftSomeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (S, NEL[T]), NotUsed] = ???
+  protected[join] def leftIorSomeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, A Ior NEL[B]) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def leftIorSomeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, A Ior NEL[B]) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def leftIorSomeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, A Ior NEL[B]) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
-  protected[join] def someLeftAndRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(NEL[S], T), NotUsed] = ???
-  protected[join] def someLeftAndRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (NEL[S], T), NotUsed] = ???
-  protected[join] def someLeftAndRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (NEL[S], T), NotUsed] = ???
+  protected[join] def someLeftIorRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, NEL[A] Ior B) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def someLeftIorRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, NEL[A] Ior B) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def someLeftIorRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, NEL[A] Ior B) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
 
-  protected[join] def anyLeftSomeRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(List[S], NEL[T]), NotUsed] = ???
-  protected[join] def anyLeftSomeRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (List[S], NEL[T]), NotUsed] = ???
-  protected[join] def anyLeftSomeRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (List[S], NEL[T]), NotUsed] = ???
+  protected[join] def leftAnyRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, List[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def leftAnyRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, List[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def leftAnyRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, List[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
-  protected[join] def someLeftAnyRight[S, T, U, V](s: Source[S, U], t: Source[T, V]): Source[(NEL[S], List[T]), NotUsed] = ???
-  protected[join] def someLeftAnyRight[R, S, T, U, V](s: Source[S, U], t: Flow[R, T, V]): Flow[R, (NEL[S], List[T]), NotUsed] = ???
-  protected[join] def someLeftAnyRight[R, S, T, U, V](s: Flow[R, S, U], t: Source[T, V]): Flow[R, (NEL[S], List[T]), NotUsed] = ???
+  protected[join] def anyLeftAndRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (List[A], B)) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def anyLeftAndRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (List[A], B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def anyLeftAndRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (List[A], B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+
+
+  protected[join] def leftSomeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, NEL[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def leftSomeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def leftSomeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (A, NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+
+  protected[join] def someLeftAndRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], B)) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def someLeftAndRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def someLeftAndRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+
+
+  protected[join] def anyLeftSomeRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (List[A], NEL[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def anyLeftSomeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (List[A], NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def anyLeftSomeRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (List[A], NEL[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+
+  protected[join] def someLeftAnyRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], List[B])) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
+  protected[join] def someLeftAnyRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], List[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
+  protected[join] def someLeftAnyRight[A, B, C, R, U, V, OUT](s: Flow[R, A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (NEL[A], List[B])) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 }
