@@ -50,6 +50,14 @@ def licenceSettings = Seq(
 
 lazy val Benchmark = config("bench") extend Test
 
+
+lazy val root = project.in(file("."))
+  .settings(moduleName := "united-streams")
+  .settings(commonSettings)
+  .settings(noPublishSettings)
+  .aggregate(core, docs)
+  .dependsOn(core)
+
 def commonSettings = Seq(
   organization := "com.github.mboogerd",
   scalaVersion := "2.11.8",
@@ -97,6 +105,7 @@ lazy val docSettings = Seq(
 lazy val docs = project
   .settings(moduleName := "united-streams-docs")
   .settings(commonSettings)
+  .settings(noPublishSettings)
   .settings(unidocSettings)
   .settings(tutSettings)
   .settings(tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import", "-Ywarn-dead-code"))))
@@ -109,18 +118,23 @@ lazy val tagName = Def.setting{
   s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
 }
 
+lazy val noPublishSettings = Seq(
+  publish := (),
+  publishLocal := (),
+  publishArtifact := false
+)
+
 lazy val publishSettings = Seq(
   homepage := Some(url("https://github.com/mboogerd/united-streams")),
   licenses := Seq("MIT" -> url("https://opensource.org/licenses/Apache-2.0")),
   scmInfo := Some(ScmInfo(url("https://github.com/mboogerd/united-streams"), "scm:git:git@github.com:mboogerd/united-streams.git")),
   autoAPIMappings := true,
-//  apiURL := Some(url("http://typelevel.org/cats/api/")),
   pomExtra := (
     <developers>
       <developer>
-        <id>ceedubs</id>
-        <name>Cody Allen</name>
-        <url>https://github.com/ceedubs/</url>
+        <id>merlijn</id>
+        <name>Merlijn Boogerd</name>
+        <url>https://github.com/mboogerd/</url>
       </developer>
     </developers>
     )
