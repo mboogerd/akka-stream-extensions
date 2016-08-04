@@ -54,7 +54,6 @@ lazy val Benchmark = config("bench") extend Test
 lazy val root = project.in(file("."))
   .settings(moduleName := "united-streams")
   .settings(commonSettings)
-  .settings(noPublishSettings)
   .aggregate(core, docs)
   .dependsOn(core)
 
