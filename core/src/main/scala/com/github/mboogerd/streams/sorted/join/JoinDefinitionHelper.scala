@@ -28,7 +28,7 @@ trait JoinDefinitionHelper{
   protected[join] def someLeftIorSomeRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, NEL[A] Ior NEL[B]) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
 
 
-  /* assymmetric instances */
+  /* asymmetric instances */
 
   protected[join] def maybeLeftAndRight[A, B, C, U, V, OUT](s: Source[A, U], t: Source[B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], B)) ⇒ OUT) ⇒ Source[OUT, NotUsed] = ???
   protected[join] def maybeLeftAndRight[A, B, C, R, U, V, OUT](s: Source[A, U], t: Flow[R, B, V]): (Monotonic[A, C], Monotonic[B, C], (C, (Option[A], B)) ⇒ OUT) ⇒ Flow[R, OUT, NotUsed] = ???
